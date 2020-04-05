@@ -20,4 +20,16 @@ object Utillities {
 
     reesult
   }
+
+  def writeQueryKafka(query:DataFrame, mode:String,topic:String,hostPort:String,checkpoint:String):StreamingQuery={
+    val ds=query.writeStream
+      .format("kafka")
+      .outputMode(mode)
+      .option("kafka.bootstrap.servers",hostPort)
+      .option("checkpointLocation", "/home/hduser/Desktop/checkpoint/monthly/"+checkpoint)
+      .option("topic",topic)
+      .start()
+
+    ds
+  }
 }
